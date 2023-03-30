@@ -40,10 +40,9 @@ inputDifficoltà.addEventListener('click', function() {
   numeroCelle = sceltaDifficolta()  
   })
   // TODO:sistemare grandezze griglia e quadrati in base alla difficoltà
-let grigliaEsiste = false;
 //4.
 startGame.addEventListener('click', function(){
- 
+ console.log(numeroCelle);
   reset(); 
 
   griglia = document.createElement('div')
@@ -53,8 +52,8 @@ startGame.addEventListener('click', function(){
   //3.  
   for (let i = 1; i < numeroCelle + 1; i++) {
     const squareReady = generatoreQuadri(i);
-    griglia.append(squareReady);
-    
+    squareReady.classList.add('d-' + numeroCelle)
+    griglia.append(squareReady);    
   }
 
   
