@@ -11,6 +11,7 @@
 // - difficoltà 3 ⇒ 49 caselle, con un numero compreso tra 1 e 49, divise in 7 caselle per 7 righe;
 
 /*
+DAY 1
 Steps
 1. prendo gli elementi necessari
 2. creo la funzione per generare i blocchi
@@ -22,6 +23,9 @@ BONUS
 6.creo la select in html e la aggiungo agli elementi
 7.creo una funzione per la scelta della difficoltà
 8. la aggiungo alla select della difficoltà
+
+DAY 2
+9. creo una funzione per generare le bombe
 */
 
 //1.
@@ -31,20 +35,25 @@ const startGame       = document.querySelector('.start-game');
 const campoGriglia    = document.querySelector('.grid-camp');
 //6.
 const inputDifficoltà = document.querySelector('.difficulty');
-let numeroCelle       = 100
+//----------------data---------
+let numeroCelle       = 100;
+const NUM_BOMBS = 3;
+let bombs = [];
 
 
 //-----------------------------------
+
 //8.
 inputDifficoltà.addEventListener('click', function() {
   numeroCelle = sceltaDifficolta()  
   })
-  // TODO:sistemare grandezze griglia e quadrati in base alla difficoltà
+
+  //---------inizio gioco---------
 //4.
 startGame.addEventListener('click', function(){
  console.log(numeroCelle);
   reset(); 
-
+  //-----------generazione griglia----
   griglia = document.createElement('div')
   griglia.classList.add('grid')
   campoGriglia.appendChild(griglia);
@@ -55,8 +64,9 @@ startGame.addEventListener('click', function(){
     squareReady.classList.add('d-' + numeroCelle)
     griglia.append(squareReady);    
   }
-
-  
+  //----------aggiunta bombe--------
+  generaBombe(NUM_BOMBS);
+  console.log(bombs);
 })
 
 
@@ -74,7 +84,7 @@ function generatoreQuadri(numInterno) {
    newSquare.classList.add('square');
    newSquare.assignedNum = numInterno;
    newSquare.addEventListener('click', function () {
-    this.classList.toggle('clicked');
+    this.classList.add('clicked');
     console.log(this.assignedNum);
    })
    return newSquare;
@@ -103,3 +113,22 @@ function reset() {
   campoGriglia.innerHTML = '';
 }
 
+//9.
+
+function generatoreNumRandom(min, max) {
+
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+
+function generaBombe() {
+  let bombs = [];
+  while (bombs.length < NUM_BOMBS) {
+    let bomb = generatoreNumRandom(1,numeroCelle)
+    if (!bombs.includes(bomb)) {
+      bombs.push(bomb)
+    }
+    console.log(bombs);
+  }
+  return bombs
+}
