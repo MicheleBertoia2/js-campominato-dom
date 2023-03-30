@@ -26,6 +26,9 @@ BONUS
 
 DAY 2
 9. creo una funzione per generare le bombe
+10. gestisco il click delle caselle se trovano una bomba
+11. inizializzo un contatore per il punteggio
+12. gestisco la vittoria/perdita
 */
 
 //1.
@@ -36,9 +39,10 @@ const campoGriglia    = document.querySelector('.grid-camp');
 //6.
 const inputDifficoltà = document.querySelector('.difficulty');
 //----------------data---------
-let numeroCelle       = 100;
-const NUM_BOMBS = 3;
+let numeroCelle = 100; //default se non si sceglie una difficoltà
+const NUM_BOMBS = 16;
 let bombs = [];
+let punteggio = 0;
 
 
 //-----------------------------------
@@ -51,7 +55,6 @@ inputDifficoltà.addEventListener('click', function() {
   //---------inizio gioco---------
 //4.
 startGame.addEventListener('click', function(){
- console.log(numeroCelle);
   reset(); 
   //-----------generazione griglia----
   griglia = document.createElement('div')
@@ -65,8 +68,9 @@ startGame.addEventListener('click', function(){
     griglia.append(squareReady);    
   }
   //----------aggiunta bombe--------
-  generaBombe(NUM_BOMBS);
+  bombs = generaBombe(NUM_BOMBS);
   console.log(bombs);
+  
 })
 
 
@@ -83,10 +87,7 @@ function generatoreQuadri(numInterno) {
    const newSquare = document.createElement('div');
    newSquare.classList.add('square');
    newSquare.assignedNum = numInterno;
-   newSquare.addEventListener('click', function () {
-    this.classList.add('clicked');
-    console.log(this.assignedNum);
-   })
+   newSquare.addEventListener('click', gestioneClickCelle)
    return newSquare;
 }
 
@@ -111,15 +112,15 @@ function sceltaDifficolta (){
 //5. 
 function reset() {
   campoGriglia.innerHTML = '';
+  bombs = [];
+  punteggio = 0;
 }
 
 //9.
 
 function generatoreNumRandom(min, max) {
-
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
-
 
 function generaBombe() {
   let bombs = [];
@@ -128,7 +129,32 @@ function generaBombe() {
     if (!bombs.includes(bomb)) {
       bombs.push(bomb)
     }
-    console.log(bombs);
   }
   return bombs
+}
+
+//10
+
+function gestioneClickCelle() {
+  this.classList.add('clicked');
+  this.removeEventListener('click', this);
+
+  if(bombs.includes(this.assignedNum)){
+    console.log('sono una bomba');
+    endGame(false)
+  }else{
+    // 11.
+    punteggio++;
+  }
+}
+
+//12.
+function endGame(isWin) {
+  if (isWin) {
+    
+  } else {
+    const overlay = document.createElement('div');
+    overlay.classList.add('end-game')
+    campoGriglia.append(overlay)    
+  }
 }
