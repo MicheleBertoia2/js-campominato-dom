@@ -29,6 +29,7 @@ DAY 2
 10. gestisco il click delle caselle se trovano una bomba
 11. inizializzo un contatore per il punteggio
 12. gestisco la vittoria/perdita
+13. mostro tutte le bombe
 */
 
 //1.
@@ -158,7 +159,9 @@ function gestioneClickCelle() {
 function endGame(isWin) {
   const overlay = document.createElement('div');
   overlay.classList.add('end-game')
-  campoGriglia.append(overlay)    
+  campoGriglia.append(overlay)   
+  //13. 
+  mostraBombe();
   let messageStr
   if (isWin) {
     messageStr = 'Ben Fatto! hai trovato tutte le caselle senza bombe!'        
@@ -170,4 +173,14 @@ function endGame(isWin) {
   const message = document.createElement('h2');
   message.innerHTML = messageStr
   campoGriglia.append(message);
+}
+
+function mostraBombe() {
+  const quadrati = document.getElementsByClassName('square');
+  for (let i = 0; i < quadrati.length; i++) {
+    const quadrato = quadrati[i];
+    if (bombs.includes(quadrato.assignedNum)) {
+      quadrato.classList.add('bomb')
+    }    
+  }
 }
