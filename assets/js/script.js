@@ -40,7 +40,7 @@ const campoGriglia    = document.querySelector('.grid-camp');
 const inputDifficoltà = document.querySelector('.difficulty');
 //----------------data---------
 let numeroCelle = 100; //default se non si sceglie una difficoltà
-const NUM_BOMBS = 16;
+const NUM_BOMBS = 3;
 let bombs = [];
 let punteggio = 0;
 
@@ -70,6 +70,7 @@ startGame.addEventListener('click', function(){
   //----------aggiunta bombe--------
   bombs = generaBombe(NUM_BOMBS);
   console.log(bombs);
+  
   
 })
 
@@ -146,15 +147,27 @@ function gestioneClickCelle() {
     // 11.
     punteggio++;
   }
+
+  if(punteggio === numeroCelle - NUM_BOMBS){
+    endGame(true)
+  }
+  console.log(punteggio);
 }
 
 //12.
 function endGame(isWin) {
+  const overlay = document.createElement('div');
+  overlay.classList.add('end-game')
+  campoGriglia.append(overlay)    
+  let messageStr
   if (isWin) {
-    
+    messageStr = 'Ben Fatto! hai trovato tutte le caselle senza bombe!'        
   } else {
-    const overlay = document.createElement('div');
-    overlay.classList.add('end-game')
-    campoGriglia.append(overlay)    
+    messageStr = `
+      Ahi! hai trovato una bomba! il tuo punteggio è ${punteggio} su ${numeroCelle}
+    `
   }
+  const message = document.createElement('h2');
+  message.innerHTML = messageStr
+  campoGriglia.append(message);
 }

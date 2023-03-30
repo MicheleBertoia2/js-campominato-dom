@@ -9,13 +9,17 @@ body {
   background-color: brown;
 }
 
+h1 {
+  margin-top: 100px;
+}
+
 .hide {
   display: none !important;
 }
 
 .main-wrapper {
   height: 100vh;
-  padding: 80px;
+  padding-top: 50px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -42,15 +46,19 @@ body {
 }
 
 .grid-camp {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
 }
 
 .end-game {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 700px;
-  height: 700px;
+  left: 57;
+  width: 500px;
+  height: 500px;
   margin: 30px 0;
   background-color: rgba(0, 0, 0, .3);
 }
@@ -59,8 +67,8 @@ body {
   display: flex;
   flex-wrap: wrap;
   margin: 30px 0;
-  width: 700px;
-  height: 700px;
+  width: 500px;
+  height: 500px;
   background-color: darkred;
   box-shadow: 0 0 20px darkred ;
 }
@@ -69,8 +77,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 70px;
-  height: 70px;
   border: 1px solid chocolate;
   cursor: pointer;
   box-shadow: inset 5px 5px 5px orange;
@@ -94,4 +100,8 @@ body {
 .square.clicked {
   background-color: chocolate;
   box-shadow: inset 5px 5px 5px darkred;
+}
+
+.clicked.bomb {
+  background-color: red;
 }
